@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TERAROSA 신규 입사자 온보딩</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="header-wrap">
+  <div class="header-top">
+    <img class="logo-img" src="logo.png" alt="TERAROSA" />
+    <div class="header-right">
+      <div class="issue">신규 입사자 온보딩</div>
+      <div class="date">OJT 3일 프로그램</div>
+    </div>
+  </div>
+  <div class="header-title-band">
+    <h1>신규 입사자 입문 교육</h1>
+    <p>NEW EMPLOYEE ONBOARDING · TERAROSA EDUCATION &amp; SERVICE TEAM</p>
+  </div>
+</header>
+
+<!-- ── NAV ── -->
+<nav class="nav-bar">
+  <div class="nav-item active" data-section="welcome" onclick="showSection('welcome', this)">환영합니다</div>
+  <div class="nav-item" data-section="schedule" onclick="showSection('schedule', this)">교육 일정</div>
+  <div class="nav-item" data-section="courses" onclick="showSection('courses', this)">교육 이수</div>
+  <div class="nav-item" data-section="links" onclick="showSection('links', this)">유용한 링크</div>
+  <div class="nav-item" data-section="final" onclick="showSection('final', this)">최종 평가</div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- 1. 환영 페이지 -->
+  <section id="sec-welcome" class="page-section active">
+    <div class="sec-head fade-up">
+      <div class="sec-head-bar"></div>
+      <div class="sec-head-inner">
+        <div class="sec-head-en">Welcome</div>
+        <div class="sec-head-ko">환영합니다</div>
+      </div>
+    </div>
+
+    <!-- 이름 입력 -->
+    <div class="name-gate fade-up d1" id="nameGate">
+      <div class="name-gate-inner">
+        <div class="name-gate-label">시작하기 전에 이름을 입력해주세요</div>
+        <div class="name-input-row">
+          <input type="text" id="nameInput" class="name-input" placeholder="홍길동" maxlength="10"/>
+          <button class="btn-primary" onclick="startOnboarding()">시작하기</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 환영 콘텐츠 (이름 입력 후 표시) -->
+    <div class="welcome-content" id="welcomeContent" style="display:none;">
+      <div class="welcome-card fade-up">
+        <div class="welcome-badge">WELCOME</div>
+        <h2 class="welcome-title">테라로사에 오신 것을<br>환영합니다, <span id="welcomeName"></span>님!</h2>
+        <p class="welcome-desc">
+          앞으로 3일간의 온보딩 프로그램을 통해 테라로사의 문화와 업무를 배우게 됩니다.<br>
+          각 교육을 이수하고 간단한 퀴즈를 완료하면 다음 교육으로 넘어갈 수 있습니다.
+        </p>
+        <div class="welcome-steps">
+          <div class="ws-item">
+            <div class="ws-num">01</div>
+            <div class="ws-text">교육 일정 확인</div>
+          </div>
+          <div class="ws-arrow">→</div>
+          <div class="ws-item">
+            <div class="ws-num">02</div>
+            <div class="ws-text">교육 이수 &amp; 퀴즈</div>
+          </div>
+          <div class="ws-arrow">→</div>
+          <div class="ws-item">
+            <div class="ws-num">03</div>
+            <div class="ws-text">최종 평가</div>
+          </div>
+        </div>
+        <button class="btn-primary btn-lg" onclick="showSection('schedule', document.querySelector('[data-section=schedule]'))">교육 일정 보기 →</button>
+      </div>
+
+      <!-- 진행현황 -->
+      <div class="progress-wrap fade-up d2">
+        <div class="progress-label">
+          <span class="progress-title">나의 이수 현황</span>
+          <span class="progress-pct" id="progressPct">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+        </div>
+        <div class="progress-detail" id="progressDetail">0 / 11개 교육 완료</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 교육 일정 -->
+  <section id="sec-schedule" class="page-section" style="display:none;">
+    <div class="sec-head fade-up">
+      <div class="sec-head-bar"></div>
+      <div class="sec-head-inner">
+        <div class="sec-head-en">Schedule</div>
+        <div class="sec-head-ko">교육 일정</div>
+      </div>
+    </div>
+
+    <div class="schedule-wrap fade-up d1">
+      <div class="schedule-day">
+        <div class="day-badge">Day 1</div>
+        <div class="day-items">
+          <div class="sched-row header-row">
+            <span class="sched-time">시간</span>
+            <span class="sched-content">교육 내용</span>
+            <span class="sched-instructor">담당</span>
+          </div>
+          <div class="sched-row"><span class="sched-time">09:00–09:30</span><span class="sched-content">아이스 브레이킹</span><span class="sched-instructor">-</span></div>
+          <div class="sched-row"><span class="sched-time">09:30–10:30</span><span class="sched-content theory-tag">회사소개</span><span class="sched-instructor">채선주</span></div>
+          <div class="sched-row"><span class="sched-time">10:30–12:00</span><span class="sched-content theory-tag">인사노무</span><span class="sched-instructor">유지은</span></div>
+          <div class="sched-row lunch-row"><span class="sched-time">12:00–13:00</span><span class="sched-content">중식</span><span class="sched-instructor">-</span></div>
+          <div class="sched-row"><span class="sched-time">13:00–14:00</span><span class="sched-content theory-tag">스페셜티 커피란</span><span class="sched-instructor">박세미</span></div>
+          <div class="sched-row"><span class="sched-time">14:00–15:30</span><span class="sched-content theory-tag">메뉴 교육 (커피/음료/베이커리)</span><span class="sched-instructor">박세미</span></div>
+          <div class="sched-row"><span class="sched-time">15:30–18:00</span><span class="sched-content theory-tag">위생 교육 I &amp; II</span><span class="sched-instructor">이은혜</span></div>
+        </div>
+      </div>
+
+      <div class="schedule-day">
+        <div class="day-badge day2">Day 2</div>
+        <div class="day-items">
+          <div class="sched-row header-row">
+            <span class="sched-time">시간</span>
+            <span class="sched-content">교육 내용</span>
+            <span class="sched-instructor">담당</span>
+          </div>
+          <div class="sched-row"><span class="sched-time">09:00–09:30</span><span class="sched-content">Tea 3종 시음</span><span class="sched-instructor">-</span></div>
+          <div class="sched-row"><span class="sched-time">09:30–12:00</span><span class="sched-content theory-tag">서비스 교육 Basic</span><span class="sched-instructor">이지은</span></div>
+          <div class="sched-row lunch-row"><span class="sched-time">12:00–13:00</span><span class="sched-content">중식</span><span class="sched-instructor">-</span></div>
+          <div class="sched-row"><span class="sched-time">13:00–14:00</span><span class="sched-content theory-tag">고객 접점 MOT</span><span class="sched-instructor">이지은</span></div>
+          <div class="sched-row"><span class="sched-time">14:00–15:00</span><span class="sched-content practice-tag">MOT Role-playing</span><span class="sched-instructor">이지은</span></div>
+          <div class="sched-row"><span class="sched-time">15:00–16:00</span><span class="sched-content theory-tag">농장 소개 및 시음</span><span class="sched-instructor">박세미</span></div>
+          <div class="sched-row"><span class="sched-time">15:30–16:00</span><span class="sched-content">베이커리 세팅/픽업</span><span class="sched-instructor">박세미</span></div>
+          <div class="sched-row"><span class="sched-time">16:00–18:00</span><span class="sched-content theory-tag">커피 상품 교육</span><span class="sched-instructor">이지은</span></div>
+        </div>
+      </div>
+
+      <div class="schedule-day">
+        <div class="day-badge day3">Day 3</div>
+        <div class="day-items">
+          <div class="sched-row header-row">
+            <span class="sched-time">시간</span>
+            <span class="sched-content">교육 내용</span>
+            <span class="sched-instructor">담당</span>
+          </div>
+          <div class="sched-row"><span class="sched-time">09:00–09:30</span><span class="sched-content">드립백 추출, 시음</span><span class="sched-instructor">-</span></div>
+          <div class="sched-row"><span class="sched-time">09:30–12:00</span><span class="sched-content theory-tag">푸드/굿즈 상품 교육</span><span class="sched-instructor">이지은</span></div>
+          <div class="sched-row lunch-row"><span class="sched-time">12:00–13:00</span><span class="sched-content">중식</span><span class="sched-instructor">-</span></div>
+          <div class="sched-row"><span class="sched-time">13:00–15:30</span><span class="sched-content theory-tag">POS &amp; KIOSK</span><span class="sched-instructor">이지은</span></div>
+          <div class="sched-row"><span class="sched-time">13:00–14:30</span><span class="sched-content practice-tag">세일즈 실습 (사례별 시나리오)</span><span class="sched-instructor">이지은</span></div>
+          <div class="sched-row"><span class="sched-time">14:30–16:00</span><span class="sched-content practice-tag">음료/베이커리/상품 판매 Role-playing</span><span class="sched-instructor">이지은</span></div>
+          <div class="sched-row"><span class="sched-time">15:30–17:00</span><span class="sched-content">필기 TEST / Operation 실습평가</span><span class="sched-instructor">이원화·이지은·박세미</span></div>
+          <div class="sched-row"><span class="sched-time">17:00–18:00</span><span class="sched-content">교육 마무리 · 설문 조사 · 기념 선물</span><span class="sched-instructor">-</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend fade-up d2">
+      <span class="legend-item"><span class="tag-dot theory"></span> 이론 교육</span>
+      <span class="legend-item"><span class="tag-dot practice"></span> 실습 교육</span>
+    </div>
+  </section>
+
+  <!-- 3. 교육 이수 -->
+  <section id="sec-courses" class="page-section" style="display:none;">
+    <div class="sec-head fade-up">
+      <div class="sec-head-bar"></div>
+      <div class="sec-head-inner">
+        <div class="sec-head-en">Courses</div>
+        <div class="sec-head-ko">교육 이수</div>
+      </div>
+    </div>
+
+    <!-- 이름 미입력 시 -->
+    <div id="coursesNameGate" style="display:none;">
+      <div class="info-box">먼저 <strong>환영합니다</strong> 탭에서 이름을 입력해주세요.</div>
+    </div>
+
+    <!-- 교육 목록 -->
+    <div id="coursesList"></div>
+
+    <!-- 퀴즈 모달 -->
+    <div class="modal-overlay" id="quizModal" style="display:none;">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-tag">QUIZ</div>
+          <div class="modal-title" id="quizTitle"></div>
+        </div>
+        <div class="modal-body" id="quizBody"></div>
+        <div class="modal-footer">
+          <button class="btn-primary" onclick="submitQuiz()">제출하기</button>
+          <button class="btn-ghost" onclick="closeQuiz()">취소</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 완료 모달 -->
+    <div class="modal-overlay" id="doneModal" style="display:none;">
+      <div class="modal modal-done">
+        <div class="done-icon">✓</div>
+        <div class="done-title" id="doneTitle">수료 완료!</div>
+        <div class="done-msg" id="doneMsg"></div>
+        <button class="btn-primary btn-lg" onclick="closeDone()">확인</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 유용한 링크 -->
+  <section id="sec-links" class="page-section" style="display:none;">
+    <div class="sec-head fade-up">
+      <div class="sec-head-bar"></div>
+      <div class="sec-head-inner">
+        <div class="sec-head-en">Links</div>
+        <div class="sec-head-ko">유용한 링크</div>
+      </div>
+    </div>
+
+    <div class="links-grid fade-up d1">
+      <a class="link-card" href="https://www.terarosa.com" target="_blank">
+        <div class="link-icon">🌐</div>
+        <div class="link-name">테라로사 공식 홈페이지</div>
+        <div class="link-desc">브랜드 소개, 매장 정보, 온라인 스토어</div>
+        <div class="link-arrow">→</div>
+      </a>
+      <a class="link-card" href="#" target="_blank">
+        <div class="link-icon">💼</div>
+        <div class="link-name">그룹웨어</div>
+        <div class="link-desc">사내 업무 시스템 · 결재 · 공지사항</div>
+        <div class="link-arrow">→</div>
+      </a>
+      <a class="link-card" href="#" target="_blank">
+        <div class="link-icon">📚</div>
+        <div class="link-name">교육 자료실</div>
+        <div class="link-desc">매뉴얼, 교육 영상, 참고 자료</div>
+        <div class="link-arrow">→</div>
+      </a>
+      <a class="link-card" href="#" target="_blank">
+        <div class="link-icon">📅</div>
+        <div class="link-name">교육 캘린더</div>
+        <div class="link-desc">이후 교육 일정 확인</div>
+        <div class="link-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="info-box fade-up d2" style="margin-top:24px;">
+      링크 주소는 교육서비스팀에서 업데이트할 예정입니다. 문의: 교육서비스팀
+    </div>
+  </section>
+
+  <!-- 5. 최종 평가 -->
+  <section id="sec-final" class="page-section" style="display:none;">
+    <div class="sec-head fade-up">
+      <div class="sec-head-bar"></div>
+      <div class="sec-head-inner">
+        <div class="sec-head-en">Final Assessment</div>
+        <div class="sec-head-ko">최종 평가</div>
+      </div>
+    </div>
+
+    <div id="finalNameGate" style="display:none;">
+      <div class="info-box">먼저 <strong>환영합니다</strong> 탭에서 이름을 입력해주세요.</div>
+    </div>
+
+    <div id="finalContent">
+      <div class="final-tabs fade-up d1">
+        <button class="final-tab active" onclick="switchFinalTab('test', this)">📝 필기 TEST</button>
+        <button class="final-tab" onclick="switchFinalTab('survey', this)">📋 교육 만족도 조사</button>
+      </div>
+
+      <!-- 필기 TEST -->
+      <div id="finalTest" class="final-panel fade-up d2">
+        <div class="final-notice">
+          <strong>안내</strong> 문항에 따라 답안 개수가 다릅니다. 답안의 번호를 확인하여 각각 작성해주세요.
+        </div>
+
+        <div class="test-form" id="testForm">
+          <!-- Q1 -->
+          <div class="q-block">
+            <div class="q-num">Q1</div>
+            <div class="q-text">'테라로사' 브랜드 명의 뜻은?</div>
+            <div class="q-inputs">
+              <div class="ans-row"><span class="ans-label">①</span><input type="text" class="ans-input" placeholder="답을 입력하세요" data-q="1" data-a="1"/></div>
+            </div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="q-block">
+            <div class="q-num">Q2</div>
+            <div class="q-text">테라로사 위생 중대 법적 사항 4가지를 작성하시오.</div>
+            <div class="q-inputs">
+              <div class="ans-row"><span class="ans-label">①</span><input type="text" class="ans-input" placeholder="답을 입력하세요" data-q="2" data-a="1"/></div>
+              <div class="ans-row"><span class="ans-label">②</span><input type="text" class="ans-input" placeholder="답을 입력하세요" data-q="2" data-a="2"/></div>
+              <div class="ans-row"><span class="ans-label">③</span><input type="text" class="ans-input" placeholder="답을 입력하세요" data-q="2" data-a="3"/></div>
+              <div class="ans-row"><span class="ans-label">④</span><input type="text" class="ans-input" placeholder="답을 입력하세요" data-q="2" data-a="4"/></div>
+            </div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="q-block">
+            <div class="q-num">Q3</div>
+            <div class="q-text">위생_보관 온도 관리 기준을 작성하시오.</div>
+            <div class="q-inputs">
+              <div class="ans-row"><span class="ans-label">①</span><span class="ans-prefix">실온:</span><input type="text" class="ans-input ans-short" placeholder="°C" data-q="3" data-a="1"/></div>
+              <div class="ans-row"><span class="ans-label">②</span><span class="ans-prefix">냉장:</span><input type="text" class="ans-input ans-short" placeholder="°C" data-q="3" data-a="2"/></div>
+              <div class="ans-row"><span class="ans-label">③</span><span class="ans-prefix">냉동:</span><input type="text" class="ans-input ans-short" placeholder="°C 이하" data-q="3" data-a="3"/></div>
+            </div>
+          </div>
+
+          <!-- Q4 -->
+          <div class="q-block">
+            <div class="q-num">Q4</div>
+            <div class="q-text">테라로사 서비스 MOT 5단계를 순서대로 적으시오.</div>
+            <div class="q-inputs">
+              <div class="ans-row"><span class="ans-label">①</span><input type="text" class="ans-input" placeholder="1단계" data-q="4" data-a="1"/></div>
+              <div class="ans-row"><span class="ans-label">②</span><input type="text" class="ans-input" placeholder="2단계" data-q="4" data-a="2"/></div>
+              <div class="ans-row"><span class="ans-label">③</span><input type="text" class="ans-input" placeholder="3단계" data-q="4" data-a="3"/></div>
+              <div class="ans-row"><span class="ans-label">④</span><input type="text" class="ans-input" placeholder="4단계" data-q="4" data-a="4"/></div>
+              <div class="ans-row"><span class="ans-label">⑤</span><input type="text" class="ans-input" placeholder="5단계" data-q="4" data-a="5"/></div>
+            </div>
+          </div>
+
+          <!-- Q5 -->
+          <div class="q-block">
+            <div class="q-num">Q5</div>
+            <div class="q-text">고객 안내 시, "실례지만" "번거롭겠지만"과 같은 완충된 표현 방법을 무엇이라 하는가?</div>
+            <div class="q-inputs">
+              <div class="ans-row"><span class="ans-label">①</span><input type="text" class="ans-input" placeholder="답을 입력하세요" data-q="5" data-a="1"/></div>
+            </div>
+          </div>
+
+          <!-- Q6 -->
+          <div class="q-block">
+            <div class="q-num">Q6</div>
+            <div class="q-text">'킹콩'의 의미와 세일즈 포인트를 적으시오.</div>
+            <div class="q-inputs">
+              <div class="ans-row"><span class="ans-label">①</span><span class="ans-prefix">'킹콩'의 뜻:</span><input type="text" class="ans-input" placeholder="답을 입력하세요" data-q="6" data-a="1"/></div>
+              <div class="ans-row"><span class="ans-label">②</span><span class="ans-prefix">세일즈 포인트:</span><textarea class="ans-textarea" placeholder="답을 입력하세요" data-q="6" data-a="2"></textarea></div>
+            </div>
+          </div>
+
+          <!-- Q7 -->
+          <div class="q-block">
+            <div class="q-num">Q7</div>
+            <div class="q-text">원두와 드립백의 판매기한과 소비기한을 적으시오.</div>
+            <div class="q-inputs">
+              <div class="ans-row"><span class="ans-label">①</span><span class="ans-prefix">원두 판매기한:</span><input type="text" class="ans-input ans-short" placeholder="일" data-q="7" data-a="1"/></div>
+              <div class="ans-row"><span class="ans-label">②</span><span class="ans-prefix">원두 소비기한:</span><input type="text" class="ans-input ans-short" placeholder="개월" data-q="7" data-a="2"/></div>
+              <div class="ans-row"><span class="ans-label">③</span><span class="ans-prefix">드립백 판매기한:</span><input type="text" class="ans-input ans-short" placeholder="일" data-q="7" data-a="3"/></div>
+              <div class="ans-row"><span class="ans-label">④</span><span class="ans-prefix">드립백 소비기한:</span><input type="text" class="ans-input ans-short" placeholder="개월" data-q="7" data-a="4"/></div>
+            </div>
+          </div>
+
+          <!-- Q8 -->
+          <div class="q-block">
+            <div class="q-num">Q8</div>
+            <div class="q-text">에티오피아 시다모 하마쇼 워시드 커피의 플레이버 세일즈 포인트를 작성하시오.</div>
+            <div class="q-inputs">
+              <div class="ans-row"><span class="ans-label">①</span><textarea class="ans-textarea" placeholder="답을 입력하세요" data-q="8" data-a="1"></textarea></div>
+            </div>
+          </div>
+
+          <!-- Q9 -->
+          <div class="q-block">
+            <div class="q-num">Q9</div>
+            <div class="q-text">풀문 블렌드 커피의 알맞은 원산지 배합을 보기 중 고르시오.</div>
+            <div class="q-options">
+              <label class="opt-label"><input type="radio" name="q9" value="1"/> ① 콜롬비아 20%+르완다 40%+에티오피아 20%</label>
+              <label class="opt-label"><input type="radio" name="q9" value="2"/> ② 콜롬비아 40%+페루 30%+르완다 30%</label>
+              <label class="opt-label"><input type="radio" name="q9" value="3"/> ③ 브라질 40%+과테말라 40%+르완다 20%</label>
+              <label class="opt-label"><input type="radio" name="q9" value="4"/> ④ 브라질 40%+페루 30%+콜롬비아 30%</label>
+            </div>
+          </div>
+
+          <!-- Q10 -->
+          <div class="q-block">
+            <div class="q-num">Q10</div>
+            <div class="q-text">브라질 슬리피캣 디카페인 커피의 카페인 제거 공법을 고르시오.</div>
+            <div class="q-options">
+              <label class="opt-label"><input type="radio" name="q10" value="1"/> ① 스위스 워터 프로세스</label>
+              <label class="opt-label"><input type="radio" name="q10" value="2"/> ② 이산화탄소 공법</label>
+              <label class="opt-label"><input type="radio" name="q10" value="3"/> ③ 슈가케인 공법</label>
+              <label class="opt-label"><input type="radio" name="q10" value="4"/> ④ 간접 용매법</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="submit-area">
+          <button class="btn-primary btn-lg" onclick="submitFinalTest()">필기 TEST 제출하기</button>
+        </div>
+        <div class="submit-msg" id="testSubmitMsg" style="display:none;"></div>
+      </div>
+
+      <!-- 만족도 조사 -->
+      <div id="finalSurvey" class="final-panel" style="display:none;">
+        <div class="final-notice">
+          솔직한 의견이 교육 개선에 큰 도움이 됩니다. 편하게 작성해주세요 :)
+        </div>
+
+        <div class="test-form" id="surveyForm">
+          <div class="q-block">
+            <div class="q-num">Q1</div>
+            <div class="q-text">전반적인 온보딩 교육 만족도는 어떠셨나요?</div>
+            <div class="q-options">
+              <label class="opt-label"><input type="radio" name="s1" value="5"/> ⑤ 매우 만족</label>
+              <label class="opt-label"><input type="radio" name="s1" value="4"/> ④ 만족</label>
+              <label class="opt-label"><input type="radio" name="s1" value="3"/> ③ 보통</label>
+              <label class="opt-label"><input type="radio" name="s1" value="2"/> ② 불만족</label>
+              <label class="opt-label"><input type="radio" name="s1" value="1"/> ① 매우 불만족</label>
+            </div>
+          </div>
+
+          <div class="q-block">
+            <div class="q-num">Q2</div>
+            <div class="q-text">교육 내용의 난이도는 적절했나요?</div>
+            <div class="q-options">
+              <label class="opt-label"><input type="radio" name="s2" value="너무 어려움"/> ① 너무 어려움</label>
+              <label class="opt-label"><input type="radio" name="s2" value="약간 어려움"/> ② 약간 어려움</label>
+              <label class="opt-label"><input type="radio" name="s2" value="적절함"/> ③ 적절함</label>
+              <label class="opt-label"><input type="radio" name="s2" value="약간 쉬움"/> ④ 약간 쉬움</label>
+              <label class="opt-label"><input type="radio" name="s2" value="너무 쉬움"/> ⑤ 너무 쉬움</label>
+            </div>
+          </div>
+
+          <div class="q-block">
+            <div class="q-num">Q3</div>
+            <div class="q-text">교육 일정(3일)은 어떠셨나요?</div>
+            <div class="q-options">
+              <label class="opt-label"><input type="radio" name="s3" value="너무 빡빡함"/> ① 너무 빡빡했다</label>
+              <label class="opt-label"><input type="radio" name="s3" value="약간 빡빡함"/> ② 약간 빡빡했다</label>
+              <label class="opt-label"><input type="radio" name="s3" value="적절함"/> ③ 적절했다</label>
+              <label class="opt-label"><input type="radio" name="s3" value="여유있음"/> ④ 여유가 있었다</label>
+            </div>
+          </div>
+
+          <div class="q-block">
+            <div class="q-num">Q4</div>
+            <div class="q-text">가장 도움이 됐던 교육 과목은 무엇인가요?</div>
+            <div class="q-inputs">
+              <div class="ans-row"><input type="text" class="ans-input" placeholder="교육명을 입력해주세요" data-q="s4" data-a="1"/></div>
+            </div>
+          </div>
+
+          <div class="q-block">
+            <div class="q-num">Q5</div>
+            <div class="q-text">보완이 필요하다고 느낀 교육 과목 또는 내용이 있다면 적어주세요.</div>
+            <div class="q-inputs">
+              <div class="ans-row"><textarea class="ans-textarea" placeholder="자유롭게 작성해주세요" data-q="s5" data-a="1"></textarea></div>
+            </div>
+          </div>
+
+          <div class="q-block">
+            <div class="q-num">Q6</div>
+            <div class="q-text">온보딩을 마친 소감이나 교육서비스팀에게 전하고 싶은 말을 자유롭게 작성해주세요.</div>
+            <div class="q-inputs">
+              <div class="ans-row"><textarea class="ans-textarea" placeholder="자유롭게 작성해주세요" data-q="s6" data-a="1"></textarea></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="submit-area">
+          <button class="btn-primary btn-lg" onclick="submitSurvey()">만족도 조사 제출하기</button>
+        </div>
+        <div class="submit-msg" id="surveySubmitMsg" style="display:none;"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<button class="top-btn" id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  <span>TOP</span>
+</button>
+
+<footer class="footer">
+  <img class="footer-logo" src="logo.png" alt="TERAROSA" />
+  <div class="footer-text">
+    신규 입사자 온보딩 시스템<br/>
+    © 2026 TERAROSA Education &amp; Service Team
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
