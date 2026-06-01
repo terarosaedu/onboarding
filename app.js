@@ -1,3 +1,27 @@
+// ── 비밀번호 설정 ──
+const ACCESS_CODE = '0601'; // ← 원하는 코드로 변경
+
+function checkPassword() {
+  const input = document.getElementById('pwInput').value.trim();
+  if (input === ACCESS_CODE) {
+    document.getElementById('passwordGate').style.display = 'none';
+    sessionStorage.setItem('tr_access', '1'); // 새로고침해도 유지
+  } else {
+    document.getElementById('pwError').style.display = 'block';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+
+// 이미 인증했으면 게이트 스킵
+if (sessionStorage.getItem('tr_access') === '1') {
+  document.addEventListener('DOMContentLoaded', () => {
+    const gate = document.getElementById('passwordGate');
+    if (gate) gate.style.display = 'none';
+  });
+}
+
+
 // ══════════════════════════════════════════════════
 // ★ 여기에 Supabase 정보를 입력하세요 ★
 // ══════════════════════════════════════════════════
