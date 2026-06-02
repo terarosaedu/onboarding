@@ -74,10 +74,10 @@ const COURSES = [
     id: 'specialty_coffee', name: '스페셜티 커피란', day: 'Day 1', time: '13:00–14:00', instructor: '박세미',
     desc: '스페셜티 커피의 정의와 기준, 테라로사가 커피를 선별하는 방식에 대해 배웁니다.',
     quiz: [{
-      q: '스페셜티 커피로 인정받기 위한 SCA 기준 점수는?',
-      options: ['70점 이상', '75점 이상', '80점 이상', '85점 이상'],
-      answer: 2,
-      explanation: 'SCA(스페셜티 커피 협회) 기준으로 100점 만점 중 80점 이상을 받은 커피를 스페셜티 커피로 분류합니다.'
+      q: '스페셜티 커피로 인정받기 위해 갖춰야 할 조건은?',
+      options: ['좋은 떼루아와 품종', '농부의 정성', '바리스타의 전문성', '위의 내용 전부'],
+      answer: 3,
+      explanation: '스페셜티 커피를 위해서는 커피 체인의 모두가 한 마음으로 연결되어야 합니다.'
     }]
   },
   {
@@ -117,12 +117,12 @@ const COURSES = [
       q: '테라로사 서비스 MOT 5단계 중 세 번째 단계는?',
       options: ['환영인사', '주문받기', '결제하기', '상품전달'],
       answer: 2,
-      explanation: 'MOT 5단계는 ① 환영인사 → ② 주문받기 → ③ 결제하기 → ④ 상품전달 → ⑤ 배웅인사 순서입니다.'
+      explanation: 'MOT 5단계는 ① 환영인사 → ② 주문받기 → ③ 결제하기 → ④ 상품전달 → ⑤ 환송인사 순서입니다.'
     }]
   },
   {
     id: 'farm', name: '농장 소개 및 시음', day: 'Day 2', time: '15:00–16:00', instructor: '박세미',
-    desc: '테라로사가 소싱하는 주요 농장과 원산지에 대한 이해를 높이고, 실제 커피 시음을 합니다.',
+    desc: '테라로사가 함께하는 주요 농장과 원산지에 대한 이해를 높이고, 실제 커피 시음을 합니다.',
     quiz: [{
       q: '에티오피아 커피의 대표적인 특징으로 맞는 것은?',
       options: ['견과류와 초콜릿 향이 강하다', '꽃향기와 과일 향이 특징적이다', '스모키하고 무거운 바디감이 있다', '단맛이 없고 드라이한 편이다'],
@@ -134,20 +134,20 @@ const COURSES = [
     id: 'coffee_products', name: '커피 상품 교육', day: 'Day 2', time: '16:00–18:00', instructor: '이지은',
     desc: '원두, 드립백 등 테라로사 커피 상품의 종류, 특징, 기한 및 세일즈 포인트를 배웁니다.',
     quiz: [{
-      q: '테라로사 원두의 판매기한은?',
-      options: ['5일', '7일', '10일', '14일'],
-      answer: 2,
-      explanation: '테라로사 원두의 판매기한은 10일입니다. 소비기한은 별도로 더 길게 설정되어 있으며, 정확한 수치는 교육 자료를 참고해주세요.'
+      q: "'킹콩'의 이름은 어떤 의미인가요?",
+      options: ['거대한 크기를 강조하는 이름', '왕(King)이라는 영어와 콩이라는 한글의 합성어', '콩고 지역의 원두를 사용한 것에서 유래', '강력한 맛이라는 의미의 조어'],
+      answer: 1,
+      explanation: "'킹콩'은 왕(King)을 의미하는 영어와 콩이라는 한글의 합성어입니다. 테라로사의 원두 프로모션 상품입니다."
     }]
   },
   {
     id: 'food_goods', name: '푸드/굿즈 상품 교육', day: 'Day 3', time: '09:30–12:00', instructor: '이지은',
     desc: '베이커리, 푸드 상품, 굿즈 라인업 전반을 이해하고 고객에게 소개하는 방법을 배웁니다.',
     quiz: [{
-      q: "'킹콩'의 이름은 어떤 의미인가요?",
-      options: ['거대한 크기를 강조하는 이름', '왕(King)이라는 영어와 콩이라는 한글의 합성어', '콩고 지역의 원두를 사용한 것에서 유래', '강력한 맛이라는 의미의 조어'],
+      q: '테라로사에서 판매하는 텀블러를 제조하는 회사 이름은 무엇일까요?',
+      options: ['미르(Myre)', '미르(Mirr)', '미르(Myrr)', '미르(Miir)'],
       answer: 1,
-      explanation: "'킹콩'은 왕(King)을 의미하는 영어와 콩이라는 한글의 합성어입니다. 테라로사의 시그니처 베이커리 상품입니다."
+      explanation: '테라로사는 미국의 미르(Miir)라는 브랜드의 텀블러를 판매하고 있습니다.'
     }]
   },
   {
@@ -449,5 +449,26 @@ async function submitSurvey() {
     msg.className = 'submit-msg error';
     msg.textContent = '제출에 실패했습니다. 인터넷 연결을 확인하고 다시 시도해주세요.';
     btn.disabled = false; btn.textContent = '만족도 조사 제출하기';
+  }
+}
+
+// ── 숨겨진 리셋 (로고 5번 탭) ──
+let resetTapCount = 0;
+let resetTapTimer = null;
+
+function handleResetTap() {
+  resetTapCount++;
+  clearTimeout(resetTapTimer);
+
+  if (resetTapCount >= 5) {
+    resetTapCount = 0;
+    if (confirm('⚠️ 모든 이수 기록과 이름이 초기화됩니다.\n정말 초기화하시겠습니까?')) {
+      localStorage.removeItem('tr_onboarding');
+      sessionStorage.removeItem('tr_access');
+      location.reload();
+    }
+  } else {
+    // 2초 안에 5번 안 누르면 카운트 리셋
+    resetTapTimer = setTimeout(() => { resetTapCount = 0; }, 2000);
   }
 }
