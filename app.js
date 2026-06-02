@@ -26,7 +26,7 @@ if (sessionStorage.getItem('tr_access') === '1') {
 // ★ 여기에 Supabase 정보를 입력하세요 ★
 // ══════════════════════════════════════════════════
 const SUPABASE_URL = 'https://iauhcswapjyyylnehmcp.supabase.co';
-const SUPABASE_KEY = 'YOUR_PUBLISHABLE_KEY_HERE'; // ← Publishable key로 교체
+const SUPABASE_KEY = 'sb_publishable_GHm8hWXwdpI6MttTruxyrw_w5f22l5H'; // ← Publishable key로 교체
 // ══════════════════════════════════════════════════
 
 async function dbInsert(table, data) {
@@ -146,7 +146,7 @@ const COURSES = [
     quiz: [{
       q: '테라로사에서 판매하는 텀블러를 제조하는 회사 이름은 무엇일까요?',
       options: ['미르(Myre)', '미르(Mirr)', '미르(Myrr)', '미르(Miir)'],
-      answer: 1,
+      answer: 3,
       explanation: '테라로사는 미국의 미르(Miir)라는 브랜드의 텀블러를 판매하고 있습니다.'
     }]
   },
@@ -154,10 +154,10 @@ const COURSES = [
     id: 'pos_kiosk', name: 'POS & KIOSK', day: 'Day 3', time: '13:00–15:30', instructor: '이지은',
     desc: '매장 운영에 필수적인 POS 시스템과 키오스크 사용 방법, 주요 기능을 배웁니다.',
     quiz: [{
-      q: 'POS 시스템 관련 올바른 설명은?',
-      options: ['POS는 Point of Sale의 약자이다', 'POS는 Point of Service의 약자이다', 'POS는 Process of Sales의 약자이다', 'POS는 Payment on Screen의 약자이다'],
+      q: '다음 중 테라로사의 POS로 결제가 불가능한 수단은??',
+      options: ['지역 화폐', '네이버 페이', '애플 페이', '카카오 페이'],
       answer: 0,
-      explanation: 'POS는 Point of Sale(판매 시점 관리)의 약자입니다. 주문 접수, 결제, 재고 관리 등 매장 판매의 모든 접점을 관리하는 시스템입니다.'
+      explanation: '테라로사 POS로 결제가 가능한 수단은 신용카드(삼성/애플페이), 현금(현금영수증), 카카오 모바일 상품권, 네이버 페이, 카카오 페이, PAYCO, 선불카드(세브란스점 전용)입니다. 지역화폐는 사용이 불가합니다. '
     }]
   }
 ];
@@ -167,6 +167,8 @@ let userName = '';
 let completions = {};
 let currentQuizIdx = null;
 let quizSubmitted = false;
+let testSubmitted = false;
+let surveySubmitted = false;
 
 // ── 초기화 ──
 window.addEventListener('DOMContentLoaded', () => {
@@ -176,6 +178,8 @@ window.addEventListener('DOMContentLoaded', () => {
       const data = JSON.parse(saved);
       userName = data.name || '';
       completions = data.completions || {};
+      testSubmitted = data.testSubmitted || false; 
+      surveySubmitted = data.surveySubmitted || false; 
       if (userName) activateUser();
     } catch(e) {}
   }
@@ -184,7 +188,12 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function saveLocal() {
-  localStorage.setItem('tr_onboarding', JSON.stringify({ name: userName, completions }));
+  localStorage.setItem('tr_onboarding', JSON.stringify({
+    name: userName,
+    completions,
+    testSubmitted: testSubmitted,
+    surveySubmitted: surveySubmitted
+  }));
 }
 
 // ── 섹션 전환 ──
@@ -210,21 +219,27 @@ function showSection(id, el) {
 function tryOpenFinal(id, el) {
   const done = Object.keys(completions).length;
   const total = COURSES.length;
+
+  showSection(id, el);
+
   if (done < total) {
+    // 이수 미완료 → 잠금
     const pct = Math.round(done / total * 100);
-    // 잠금 페이지 보여주기
-    showSection(id, el);
-    const lockView = document.getElementById(id + 'LockedView');
-    const content = document.getElementById(id + 'Content');
-    const completePage = document.getElementById(id + 'CompletePage');
-    if (lockView) lockView.style.display = 'block';
-    if (content) content.style.display = 'none';
-    if (completePage) completePage.style.display = 'none';
-    const pctEl = document.getElementById(id + 'LockPct');
-    if (pctEl) pctEl.textContent = pct + '%';
+    document.getElementById(id + 'LockedView').style.display = 'block';
+    document.getElementById(id + 'Content').style.display = 'none';
+    document.getElementById(id + 'CompletePage').style.display = 'none';
+    document.getElementById(id + 'LockPct').textContent = pct + '%';
+  } else if ((id === 'test' && testSubmitted) || (id === 'survey' && surveySubmitted)) {
+    // 이미 제출 완료 → 완료 화면 유지
+    document.getElementById(id + 'LockedView').style.display = 'none';
+    document.getElementById(id + 'Content').style.display = 'none';
+    document.getElementById(id + 'CompletePage').style.display = 'block';
+    if (id === 'survey') document.getElementById('finalWelcomeName').textContent = userName;
   } else {
-    showSection(id, el);
-    openFinalSection(id);
+    // 정상 진입
+    document.getElementById(id + 'LockedView').style.display = 'none';
+    document.getElementById(id + 'Content').style.display = 'block';
+    document.getElementById(id + 'CompletePage').style.display = 'none';
   }
 }
 
@@ -409,6 +424,10 @@ async function submitFinalTest() {
   btn.disabled = true; btn.textContent = '제출 중...';
 
   const ok = await dbInsert('test_submissions', { name: userName, answers });
+  testSubmitted = true; 
+  saveLocal();          
+
+
 
   if (ok) {
     document.getElementById('testContent').style.display = 'none';
@@ -438,6 +457,8 @@ async function submitSurvey() {
   btn.disabled = true; btn.textContent = '제출 중...';
 
   const ok = await dbInsert('survey_submissions', { name: userName, answers });
+    surveySubmitted = true; // 추가
+    saveLocal();            // 추가
 
   if (ok) {
     document.getElementById('finalWelcomeName').textContent = userName;
