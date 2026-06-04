@@ -101,7 +101,7 @@ const COURSES = [
     }]
   },
   {
-    id: 'service_basic', name: '서비스 교육 Basic', day: 'Day 2', time: '09:30–12:00', instructor: '이지은',
+    id: 'service_basic', name: '서비스 교육 Basic', day: 'Day 2', time: '09:30–10:00', instructor: '이지은',
     desc: '테라로사 서비스의 기본 원칙과 고객 응대 매너를 배웁니다.',
     quiz: [{
       q: '고객 안내 시 "실례지만", "번거롭겠지만"과 같이 완충하는 표현 방법을 무엇이라 하나요?',
@@ -111,7 +111,7 @@ const COURSES = [
     }]
   },
   {
-    id: 'mot', name: '고객 접점 MOT', day: 'Day 2', time: '13:00–14:00', instructor: '이지은',
+    id: 'mot', name: '고객 접점 MOT', day: 'Day 2', time: '10:00–12:00', instructor: '이지은',
     desc: '고객과의 모든 접점(Moment of Truth)을 5단계로 정리하고 각 단계별 응대 방법을 배웁니다.',
     quiz: [{
       q: '테라로사 서비스 MOT 5단계 중 세 번째 단계는?',
@@ -121,7 +121,7 @@ const COURSES = [
     }]
   },
   {
-    id: 'farm', name: '농장 소개 및 시음', day: 'Day 2', time: '15:00–16:00', instructor: '박세미',
+    id: 'farm', name: '농장 소개 및 시음', day: 'Day 2', time: '14:00–15:30', instructor: '박세미',
     desc: '테라로사가 함께하는 주요 농장과 원산지에 대한 이해를 높이고, 실제 커피 시음을 합니다.',
     quiz: [{
       q: '에티오피아 커피의 대표적인 특징으로 맞는 것은?',
@@ -141,7 +141,7 @@ const COURSES = [
     }]
   },
   {
-    id: 'food_goods', name: '푸드/굿즈 상품 교육', day: 'Day 3', time: '09:30–12:00', instructor: '이지은',
+    id: 'food_goods', name: '푸드/굿즈 상품 교육', day: 'Day 3', time: '09:30–10:30', instructor: '이지은',
     desc: '베이커리, 푸드 상품, 굿즈 라인업 전반을 이해하고 고객에게 소개하는 방법을 배웁니다.',
     quiz: [{
       q: '테라로사에서 판매하는 텀블러를 제조하는 회사 이름은 무엇일까요?',
@@ -151,7 +151,7 @@ const COURSES = [
     }]
   },
   {
-    id: 'pos_kiosk', name: 'POS & KIOSK', day: 'Day 3', time: '13:00–15:30', instructor: '이지은',
+    id: 'pos_kiosk', name: 'POS & KIOSK', day: 'Day 3', time: '10:30–12:00', instructor: '이지은',
     desc: '매장 운영에 필수적인 POS 시스템과 키오스크 사용 방법, 주요 기능을 배웁니다.',
     quiz: [{
       q: '다음 중 테라로사의 POS로 결제가 불가능한 수단은??',

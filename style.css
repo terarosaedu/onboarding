@@ -102,6 +102,7 @@ body {
   align-items: center;
   gap: 12px;
 }
+
 .pf-label {
   font-family: 'DM Mono', monospace;
   font-size: 10px;
@@ -294,6 +295,12 @@ body {
   line-height: 1.8;
   margin-bottom: 24px;
 }
+.welcome-information {
+  color: rgba(250, 175, 175, 0.692);
+  font-size: 9px;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
 .welcome-steps {
   display: flex;
   gap: 8px;
@@ -367,7 +374,7 @@ body {
 .sched-dot.theory { background: var(--red); }
 .sched-dot.practice { background: #1976D2; }
 .sched-dot.neutral { background: var(--gray-300); }
-.sched-content-text { flex: 1; font-size: 13px; color: var(--black); }
+.sched-content-text { flex: 1; font-size: 12px; color: var(--black); }
 .sched-instructor {
   font-family: 'DM Mono', monospace;
   font-size: 10px;
@@ -744,8 +751,12 @@ body {
   .nav-item { flex-direction: row; font-size: 13px; gap: 6px; padding: 14px 16px; }
   .nav-item .nav-icon { font-size: 15px; }
   .nav-item.active::after { top: auto; bottom: 0; left: 0; right: 0; height: 2px; border-radius: 0; }
-  .progress-float { top: 57px; }
-  .main { padding: 24px 24px 40px; margin-top: 36px; }
+  .progress-float {
+    position: sticky;
+    top: 106px;
+    z-index: 600;
+  }
+  .main { padding: 24px 24px 40px; margin-top: 0; }
   body { padding-bottom: 0; }
   .modal-overlay { align-items: center; justify-content: center; }
   .modal { border-radius: 16px; max-width: 520px; max-height: 85vh; }
