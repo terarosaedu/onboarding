@@ -295,12 +295,6 @@ body {
   line-height: 1.8;
   margin-bottom: 24px;
 }
-.welcome-information {
-  color: rgba(250, 175, 175, 0.692);
-  font-size: 9px;
-  line-height: 1.8;
-  margin-bottom: 24px;
-}
 .welcome-steps {
   display: flex;
   gap: 8px;
@@ -374,7 +368,7 @@ body {
 .sched-dot.theory { background: var(--red); }
 .sched-dot.practice { background: #1976D2; }
 .sched-dot.neutral { background: var(--gray-300); }
-.sched-content-text { flex: 1; font-size: 12px; color: var(--black); }
+.sched-content-text { flex: 1; font-size: 13px; color: var(--black); }
 .sched-instructor {
   font-family: 'DM Mono', monospace;
   font-size: 10px;
@@ -736,6 +730,73 @@ body {
   font-family: 'DM Mono', monospace;
   font-size: 9px; letter-spacing: 1px;
   color: var(--gray-400);
+}
+
+/* ── SURVEY GROUP LABEL ── */
+.survey-group-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--gray-600);
+  font-weight: 600;
+  margin-bottom: 6px;
+  padding: 0 2px;
+}
+.survey-group-label span {
+  color: var(--gray-400);
+  font-weight: 400;
+  margin-left: 6px;
+}
+
+/* ── SURVEY RATING SCALE ── */
+.rating-scale {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.rating-nums {
+  display: flex;
+  flex: 1;
+  gap: 6px;
+}
+.rating-opt {
+  flex: 1;
+  cursor: pointer;
+  display: block;
+}
+.rating-opt input { display: none; }
+.rating-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  border-radius: 8px;
+  border: 1.5px solid var(--gray-200);
+  font-family: 'DM Mono', monospace;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--gray-600);
+  transition: all 0.15s;
+  background: var(--white);
+  user-select: none;
+}
+.rating-opt:hover .rating-num {
+  border-color: var(--red-muted);
+  background: var(--red-pale);
+  color: var(--red);
+}
+.rating-opt input:checked + .rating-num {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
+.rating-anchor {
+  font-size: 10px;
+  color: var(--gray-400);
+  line-height: 1.4;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* ── DESKTOP OVERRIDE ── */
