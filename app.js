@@ -385,7 +385,6 @@ async function submitQuiz() {
   const timeStr = now.toLocaleDateString('ko-KR') + ' ' + now.toLocaleTimeString('ko-KR', {hour:'2-digit', minute:'2-digit'});
   completions[course.id] = { time: timeStr };
   saveLocal();
-  await dbInsert('completions', { name: userName, course_name: course.name });
   renderCourses();
   updateProgressUI();
 
@@ -445,12 +444,12 @@ async function submitFinalTest() {
 async function submitSurvey() {
   if (!userName) { alert('먼저 이름을 입력해주세요.'); return; }
   const answers = {};
-  // 점수형(s1~s4) + 분포형(s5~s6) — 모두 라디오
-  ['s1','s2','s3','s4','s5','s6'].forEach(name => {
+  // 점수형(s1~s3) + 객관식(s4,s7) + 점수형(s5~s6) — 모두 라디오
+  ['s1','s2','s3','s4','s5','s6','s7'].forEach(name => {
     const sel = document.querySelector(`input[name="${name}"]:checked`);
     answers[name] = sel ? sel.value : '';
   });
-  // 주관식(s7~s9) — data-q 기준
+  // 주관식(s8~s10) — data-q 기준
   document.querySelectorAll('#surveyForm .ans-input, #surveyForm .ans-textarea').forEach(el => {
     answers[el.dataset.q] = el.value.trim();
   });
