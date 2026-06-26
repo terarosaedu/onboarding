@@ -250,8 +250,8 @@
           <div class="q-num">Q5</div>
           <div class="q-text">"스페셜티 커피에 대한 정의"와 함께 테라로사의 바리스타로서 임해야 하는 자세를 서술하시오.</div>
           <div class="q-inputs">
-            <div class="ans-row"><span class="ans-label">①</span><span class="ans-prefix">스페셜티 커피란?:</span><input type="text" class="ans-input" placeholder="답을 입력하세요" data-q="6" data-a="1"/></div>
-            <div class="ans-row"><span class="ans-label">②</span><span class="ans-prefix">임해야 하는 자세</span><textarea class="ans-textarea" placeholder="답을 입력하세요" data-q="6" data-a="2"></textarea></div>
+            <div class="ans-row"><span class="ans-label">①</span><span class="ans-prefix">스페셜티 커피란?:</span><input type="text" class="ans-input" placeholder="답을 입력하세요" data-q="5" data-a="1"/></div>
+            <div class="ans-row"><span class="ans-label">②</span><span class="ans-prefix">임해야 하는 자세</span><textarea class="ans-textarea" placeholder="답을 입력하세요" data-q="5" data-a="2"></textarea></div>
           </div>
         </div>
         <div class="q-block">
@@ -285,7 +285,7 @@
           <div class="q-options">
             <label class="opt-label"><input type="radio" name="q9" value="1"/> ① 에티오피아 50%+르완다 40%+기타 10%</label>
             <label class="opt-label"><input type="radio" name="q9" value="2"/> ② 에티오피아 40%+케냐 30%+기타 30%</label>
-            <label class="opt-label"><input type="radio" name="q9" value="3"/> ③ 에티오피아 50%+콜롬비아 40%+기타 20%</label>
+            <label class="opt-label"><input type="radio" name="q9" value="3"/> ③ 에티오피아 50%+콜롬비아 40%+기타 10%</label>
             <label class="opt-label"><input type="radio" name="q9" value="4"/> ④ 에티오피아 70%+콜롬비아 20%+기타 10%</label>
           </div>
         </div>
@@ -303,7 +303,8 @@
       <div class="submit-area"><button class="btn-primary btn-lg" id="testSubmitBtn" onclick="submitFinalTest()">필기 TEST 제출하기</button></div>
       <div class="submit-msg" id="testSubmitMsg" style="display:none;"></div>
     </div>
-    <!-- 제출 완료 페이지 -->
+
+  <!-- 제출 완료 페이지 -->
     <div id="testCompletePage" style="display:none;">
       <div class="completion-page fade-up">
         <img class="completion-logo" src="logo.png" alt="TERAROSA"/>
@@ -332,7 +333,7 @@
       <div class="test-form" id="surveyForm">
 
         <!-- ── 온보딩 프로그램 ── -->
-        <div class="survey-group-label">🏢 온보딩 프로그램</div>
+        <div class="survey-group-label">🏢 온보딩 프로그램 <br>테라로사에 합류하신 것을 환영합니다. 3일간의 온보딩 전반에 대한 경험을 평가해주세요.</div>
 
         <div class="q-block">
           <div class="q-num">Q1</div>
@@ -393,7 +394,7 @@
         </div>
 
         <!-- ── 교육 과정 ── -->
-        <div class="survey-group-label" style="margin-top:4px;">📚 교육 과정</div>
+        <div class="survey-group-label" style="margin-top:4px;">📚 교육 과정<br>각 교육 세션의 내용과 진행 방식에 대해 평가해주세요.</div>
 
         <div class="q-block">
           <div class="q-num">Q5</div>
@@ -438,7 +439,7 @@
         </div>
 
         <!-- ── 개선 의견 ── -->
-        <div class="survey-group-label" style="margin-top:4px;">✏️ 개선 의견</div>
+        <div class="survey-group-label" style="margin-top:4px;">✏️ 개선 의견 <br>더 나은 온보딩 프로그램을 만들기 위해 솔직한 의견을 남겨주세요.</div>
 
         <div class="q-block">
           <div class="q-num">Q8</div>
@@ -468,6 +469,7 @@
       <div class="submit-area"><button class="btn-primary btn-lg" id="surveySubmitBtn" onclick="submitSurvey()">만족도 조사 제출하기</button></div>
       <div class="submit-msg" id="surveySubmitMsg" style="display:none;"></div>
     </div>
+    
     <!-- 최종 완료 페이지 -->
     <div id="surveyCompletePage" style="display:none;">
       <div class="completion-page fade-up">

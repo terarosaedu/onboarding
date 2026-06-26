@@ -23,27 +23,23 @@ if (sessionStorage.getItem('tr_access') === '1') {
 
 
 // ══════════════════════════════════════════════════
-// ★ 여기에 Supabase 정보를 입력하세요 ★
+// ★ Google Sheets – 필기시험 · 만족도 조사 공통 URL ★
+// Apps Script 웹앱 배포 후 URL을 여기에 붙여넣으세요
 // ══════════════════════════════════════════════════
-const SUPABASE_URL = 'https://iauhcswapjyyylnehmcp.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_GHm8hWXwdpI6MttTruxyrw_w5f22l5H'; // ← Publishable key로 교체
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz24b9IXECWsWQ40-dLPQzqwEu6fOsCPAow97-035dvSFJs2nBXherQ8w9FqRfehIV8/exec';
 // ══════════════════════════════════════════════════
 
-async function dbInsert(table, data) {
+async function postToSheet(data) {
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    const res = await fetch(GOOGLE_SHEET_URL, {
       method: 'POST',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      redirect: 'follow'   // GAS 리다이렉트 정상 처리
     });
-    return res.ok;
+    const json = await res.json();
+    return json.success === true;
   } catch (e) {
-    console.error('DB 오류:', e);
+    console.error('GAS 오류:', e);
     return false;
   }
 }
@@ -422,11 +418,26 @@ async function submitFinalTest() {
   const btn = document.getElementById('testSubmitBtn');
   btn.disabled = true; btn.textContent = '제출 중...';
 
-  const ok = await dbInsert('test_submissions', { name: userName, answers });
-  testSubmitted = true; 
-  saveLocal();          
+  const ok = await postToSheet({
+    type: 'test',
+    name:  userName,
+    q1_1:  answers['1']?.['1']  || '',
+    q2_1:  answers['2']?.['1']  || '',  q2_2:  answers['2']?.['2']  || '',
+    q2_3:  answers['2']?.['3']  || '',  q2_4:  answers['2']?.['4']  || '',
+    q3_1:  answers['3']?.['1']  || '',  q3_2:  answers['3']?.['2']  || '',  q3_3: answers['3']?.['3'] || '',
+    q4_1:  answers['4']?.['1']  || '',  q4_2:  answers['4']?.['2']  || '',
+    q4_3:  answers['4']?.['3']  || '',  q4_4:  answers['4']?.['4']  || '',  q4_5: answers['4']?.['5'] || '',
+    q5_1:  answers['5']?.['1']  || '',  q5_2:  answers['5']?.['2']  || '',
+    q6_1:  answers['6']?.['1']  || '',  q6_2:  answers['6']?.['2']  || '',
+    q7_1:  answers['7']?.['1']  || '',  q7_2:  answers['7']?.['2']  || '',
+    q7_3:  answers['7']?.['3']  || '',  q7_4:  answers['7']?.['4']  || '',
+    q8_1:  answers['8']?.['1']  || '',
+    q9:    answers['q9']        || '',
+    q10:   answers['q10']       || ''
+  });
 
-
+  testSubmitted = true;
+  saveLocal();
 
   if (ok) {
     document.getElementById('testContent').style.display = 'none';
@@ -444,20 +455,63 @@ async function submitFinalTest() {
 async function submitSurvey() {
   if (!userName) { alert('먼저 이름을 입력해주세요.'); return; }
   const answers = {};
-  // 점수형(s1~s3) + 객관식(s4,s7) + 점수형(s5~s6) — 모두 라디오
+
   ['s1','s2','s3','s4','s5','s6','s7'].forEach(name => {
     const sel = document.querySelector(`input[name="${name}"]:checked`);
     answers[name] = sel ? sel.value : '';
   });
-  // 주관식(s8~s10) — data-q 기준
   document.querySelectorAll('#surveyForm .ans-input, #surveyForm .ans-textarea').forEach(el => {
     answers[el.dataset.q] = el.value.trim();
   });
 
+  // ── 유효성 검사 ──
+  const RADIO_LABELS = {
+    s1: 'Q1. 온보딩 프로그램 만족도',
+    s2: 'Q2. 브랜드/문화 이해 도움도',
+    s3: 'Q3. 매장 업무 이해 도움도',
+    s4: 'Q4. 교육 일정 및 구성',
+    s5: 'Q5. 교육 자료 적절성',
+    s6: 'Q6. 강사 설명 이해도',
+    s7: 'Q7. 교육 내용 난이도',
+  };
+  const TEXT_LABELS = {
+    s8: 'Q8. 보완이 필요한 내용',
+    s9: 'Q9. 추가로 받고 싶은 교육',
+    s10: 'Q10. 개선 의견/소감',
+  };
+
+  const missing = [];
+  for (const [key, label] of Object.entries(RADIO_LABELS)) {
+    if (!answers[key]) missing.push(label);
+  }
+  for (const [key, label] of Object.entries(TEXT_LABELS)) {
+    if (!answers[key]) missing.push(label);
+  }
+
+  if (missing.length > 0) {
+    const msg = document.getElementById('surveySubmitMsg');
+    msg.style.display = 'block';
+    msg.className = 'submit-msg error';
+    msg.innerHTML = `<strong>아직 답하지 않은 항목이 있어요 (${missing.length}개)</strong><br><span style="font-size:12px;line-height:2">${missing.join('<br>')}</span>`;
+    msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  const msgEl = document.getElementById('surveySubmitMsg');
+  msgEl.style.display = 'none';
+
   const btn = document.getElementById('surveySubmitBtn');
   btn.disabled = true; btn.textContent = '제출 중...';
 
-  const ok = await dbInsert('survey_submissions', { name: userName, answers });
+  const ok = await postToSheet({
+    type: 'survey',
+    name: userName,
+    s1:  answers.s1  || '', s2:  answers.s2  || '', s3:  answers.s3  || '',
+    s4:  answers.s4  || '',
+    s5:  answers.s5  || '', s6:  answers.s6  || '', s7:  answers.s7  || '',
+    s8:  answers.s8  || '', s9:  answers.s9  || '', s10: answers.s10 || ''
+  });
+
   surveySubmitted = true;
   saveLocal();
 
