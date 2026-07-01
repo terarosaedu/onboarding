@@ -206,6 +206,19 @@
       <div class="locked-title">아직 열리지 않았어요</div>
       <div class="locked-desc">11개 교육을 모두 이수한 후<br>필기 TEST가 활성화됩니다.<br><br>현재 이수율: <strong id="testLockPct">0%</strong></div>
     </div>
+
+    <div id="testPasswordGate" class="locked-overlay fade-up" style="display:none;">
+  <div class="locked-icon">🔐</div>
+  <div class="locked-title">필기 TEST 입장 코드</div>
+  <div class="locked-desc">교육서비스팀에서 안내한 입장 코드를 입력해주세요.</div>
+  <div class="name-input-row" style="margin-top:20px; justify-content:center;">
+    <input id="testPwInput" type="password" class="name-input" placeholder="코드 입력" maxlength="4"
+      style="max-width:160px;" onkeydown="if(event.key==='Enter') checkTestPassword()"/>
+    <button class="btn-primary" onclick="checkTestPassword()">확인</button>
+  </div>
+  <div id="testPwError" style="color:#C3171E; font-size:13px; margin-top:12px; display:none;">코드가 올바르지 않습니다</div>
+</div>
+
     <div id="testContent" style="display:none;">
       <div class="info-box fade-up">문항에 따라 답안 개수가 다릅니다. 답안의 번호를 확인하여 각각 작성해주세요.</div>
       <div class="test-form" id="testForm">

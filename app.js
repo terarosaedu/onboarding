@@ -13,6 +13,21 @@ function checkPassword() {
   }
 }
 
+const TEST_ACCESS_CODE = '0123';
+
+function checkTestPassword() {
+  const input = document.getElementById('testPwInput').value.trim();
+  if (input === TEST_ACCESS_CODE) {
+    sessionStorage.setItem('tr_test_pw', '1');
+    document.getElementById('testPasswordGate').style.display = 'none';
+    document.getElementById('testContent').style.display = 'block';
+  } else {
+    document.getElementById('testPwError').style.display = 'block';
+    document.getElementById('testPwInput').value = '';
+    document.getElementById('testPwInput').focus();
+  }
+}
+
 // 이미 인증했으면 게이트 스킵
 if (sessionStorage.getItem('tr_access') === '1') {
   document.addEventListener('DOMContentLoaded', () => {
@@ -218,24 +233,39 @@ function tryOpenFinal(id, el) {
 
   showSection(id, el);
 
+  const pwGate = id === 'test' ? document.getElementById('testPasswordGate') : null;
+
   if (done < total) {
     // 이수 미완료 → 잠금
     const pct = Math.round(done / total * 100);
     document.getElementById(id + 'LockedView').style.display = 'block';
     document.getElementById(id + 'Content').style.display = 'none';
     document.getElementById(id + 'CompletePage').style.display = 'none';
+    if (pwGate) pwGate.style.display = 'none';
     document.getElementById(id + 'LockPct').textContent = pct + '%';
   } else if ((id === 'test' && testSubmitted) || (id === 'survey' && surveySubmitted)) {
     // 이미 제출 완료 → 완료 화면 유지
     document.getElementById(id + 'LockedView').style.display = 'none';
     document.getElementById(id + 'Content').style.display = 'none';
     document.getElementById(id + 'CompletePage').style.display = 'block';
+    if (pwGate) pwGate.style.display = 'none';
     if (id === 'survey') document.getElementById('finalWelcomeName').textContent = userName;
   } else {
     // 정상 진입
     document.getElementById(id + 'LockedView').style.display = 'none';
-    document.getElementById(id + 'Content').style.display = 'block';
     document.getElementById(id + 'CompletePage').style.display = 'none';
+
+    if (id === 'test') {
+      if (sessionStorage.getItem('tr_test_pw') === '1') {
+        pwGate.style.display = 'none';
+        document.getElementById('testContent').style.display = 'block';
+      } else {
+        pwGate.style.display = 'block';
+        document.getElementById('testContent').style.display = 'none';
+      }
+    } else {
+      document.getElementById(id + 'Content').style.display = 'block';
+    }
   }
 }
 
