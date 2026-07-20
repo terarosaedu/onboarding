@@ -1,5 +1,5 @@
 // ── 비밀번호 설정 ──
-const ACCESS_CODE = '0710'; // ← 원하는 코드로 변경
+const ACCESS_CODE = '0820'; // ← 원하는 코드로 변경
 
 function checkPassword() {
   const input = document.getElementById('pwInput').value.trim();
