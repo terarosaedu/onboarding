@@ -823,3 +823,6 @@ body {
   .modal { border-radius: 16px; max-width: 520px; max-height: 85vh; }
   .name-input-row { flex-direction: row; }
 }
+
+.ans-row.stack { flex-wrap: wrap; }
+.ans-row.stack .ans-textarea { flex: 0 0 100%; width: 100%; margin-top: 8px; min-height: 100px; }
