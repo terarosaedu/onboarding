@@ -825,4 +825,5 @@ body {
 }
 
 .ans-row.stack { flex-wrap: wrap; }
+.ans-row.stack .ans-prefix { white-space: normal; flex: 1; }
 .ans-row.stack .ans-textarea { flex: 0 0 100%; width: 100%; margin-top: 8px; min-height: 100px; }
